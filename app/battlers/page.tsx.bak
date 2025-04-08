@@ -1,0 +1,164 @@
+"use client"
+
+import Link from "next/link"
+import Image from "next/image"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Search } from "lucide-react"
+
+// Mock data for battlers
+const battlers = [
+  {
+    id: 1,
+    name: "Loaded Lux",
+    location: "Harlem, NY",
+    image: "/placeholder.svg?height=300&width=300",
+    tags: ["URL", "Veteran"],
+  },
+  {
+    id: 2,
+    name: "Tsu Surf",
+    location: "Newark, NJ",
+    image: "/placeholder.svg?height=300&width=300",
+    tags: ["URL", "Puncher"],
+  },
+  {
+    id: 3,
+    name: "Geechi Gotti",
+    location: "Compton, CA",
+    image: "/placeholder.svg?height=300&width=300",
+    tags: ["URL", "Performance"],
+  },
+  {
+    id: 4,
+    name: "Rum Nitty",
+    location: "Phoenix, AZ",
+    image: "/placeholder.svg?height=300&width=300",
+    tags: ["URL", "Puncher"],
+  },
+  {
+    id: 5,
+    name: "JC",
+    location: "Pontiac, MI",
+    image: "/placeholder.svg?height=300&width=300",
+    tags: ["URL", "Lyricist"],
+  },
+  {
+    id: 6,
+    name: "K-Shine",
+    location: "Harlem, NY",
+    image: "/placeholder.svg?height=300&width=300",
+    tags: ["URL", "Performance"],
+  },
+  {
+    id: 7,
+    name: "Hitman Holla",
+    location: "St. Louis, MO",
+    image: "/placeholder.svg?height=300&width=300",
+    tags: ["URL", "Performance"],
+  },
+  {
+    id: 8,
+    name: "Charlie Clips",
+    location: "Harlem, NY",
+    image: "/placeholder.svg?height=300&width=300",
+    tags: ["URL", "Freestyle"],
+  },
+  {
+    id: 9,
+    name: "Daylyt",
+    location: "Watts, CA",
+    image: "/placeholder.svg?height=300&width=300",
+    tags: ["URL", "Lyricist"],
+  },
+  {
+    id: 10,
+    name: "T-Rex",
+    location: "Harlem, NY",
+    image: "/placeholder.svg?height=300&width=300",
+    tags: ["URL", "Veteran"],
+  },
+  {
+    id: 11,
+    name: "Aye Verb",
+    location: "St. Louis, MO",
+    image: "/placeholder.svg?height=300&width=300",
+    tags: ["URL", "Veteran"],
+  },
+  {
+    id: 12,
+    name: "Murda Mook",
+    location: "Harlem, NY",
+    image: "/placeholder.svg?height=300&width=300",
+    tags: ["URL", "Veteran"],
+  },
+]
+
+export default function BattlersPage() {
+  // Add this function to handle filter changes
+  const handleFilterChange = (filters) => {
+    // In a real app, this would filter the battlers
+    console.log("Filters changed:", filters)
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">All Battlers</h1>
+
+      {/* Search and filter */}
+      <div className="flex flex-col md:flex-row gap-4 mb-8">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <Input placeholder="Search battlers..." className="pl-10 bg-gray-900 border-gray-700" />
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm">
+            All
+          </Button>
+          <Button variant="outline" size="sm">
+            URL
+          </Button>
+          <Button variant="outline" size="sm">
+            RBE
+          </Button>
+          <Button variant="outline" size="sm">
+            KOTD
+          </Button>
+        </div>
+      </div>
+
+      {/* Add the QuickFilterBar component */}
+      <div className="mb-6">
+        <QuickFilterBar onFilterChange={handleFilterChange} />
+      </div>
+
+      {/* Battlers grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        {battlers.map((battler) => (
+          <Link
+            key={battler.id}
+            href={`/battlers/${battler.id}`}
+            className="bg-gray-900 rounded-lg overflow-hidden border border-gray-800 hover:border-purple-500 transition-all hover:shadow-lg hover:shadow-purple-900/20"
+          >
+            <div className="aspect-square relative">
+              <Image src={battler.image || "/placeholder.svg"} alt={battler.name} fill className="object-cover" />
+            </div>
+            <div className="p-3">
+              <h3 className="font-medium">{battler.name}</h3>
+              <p className="text-sm text-gray-400">{battler.location}</p>
+              <div className="flex flex-wrap gap-1 mt-2">
+                {battler.tags.map((tag) => (
+                  <span key={tag} className="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+import QuickFilterBar from "@/components/battler/QuickFilterBar"
