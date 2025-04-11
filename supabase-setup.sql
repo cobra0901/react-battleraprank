@@ -1,3 +1,4 @@
+
 -- STEP 1: Ensure user_profiles table is correctly created with proper columns
 CREATE TABLE IF NOT EXISTS public.user_profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
